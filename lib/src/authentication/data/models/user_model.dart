@@ -53,8 +53,3 @@ class UserModel extends User {
 
   String toJson() => jsonEncode(toMap());
 }
-
-void main() {
-  const user = UserModel.empty();
-  final newUser = user.copyWith(name: "Paul");
-}
