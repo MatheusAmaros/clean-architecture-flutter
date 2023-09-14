@@ -128,6 +128,12 @@
       "languageVersion": "2.19"
     },
     {
+      "name": "http",
+      "rootUri": "file:///home/amaro/.pub-cache/hosted/pub.dev/http-1.1.0",
+      "packageUri": "lib/",
+      "languageVersion": "3.0"
+    },
+    {
       "name": "http_multi_server",
       "rootUri": "file:///home/amaro/.pub-cache/hosted/pub.dev/http_multi_server-3.2.1",
       "packageUri": "lib/",
@@ -362,7 +368,7 @@
       "languageVersion": "3.0"
     }
   ],
-  "generated": "2023-09-02T05:12:08.709885Z",
+  "generated": "2023-09-13T03:36:35.223143Z",
   "generator": "pub",
   "generatorVersion": "3.0.6"
 }

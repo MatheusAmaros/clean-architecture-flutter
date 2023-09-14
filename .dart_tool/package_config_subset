@@ -74,6 +74,10 @@ glob
 2.19
 file:///home/amaro/.pub-cache/hosted/pub.dev/glob-2.1.2/
 file:///home/amaro/.pub-cache/hosted/pub.dev/glob-2.1.2/lib/
+http
+3.0
+file:///home/amaro/.pub-cache/hosted/pub.dev/http-1.1.0/
+file:///home/amaro/.pub-cache/hosted/pub.dev/http-1.1.0/lib/
 http_multi_server
 2.12
 file:///home/amaro/.pub-cache/hosted/pub.dev/http_multi_server-3.2.1/
