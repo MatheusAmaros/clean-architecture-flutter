@@ -5,6 +5,7 @@ import 'package:http/http.dart' as http;
 import 'package:tdd_tutorial/core/errors/exceptions.dart';
 import 'package:tdd_tutorial/core/utils/constants.dart';
 import 'package:tdd_tutorial/src/authentication/data/datasources/authentication_remote_data_source.dart';
+import 'package:tdd_tutorial/src/authentication/data/models/user_model.dart';
 
 class MockClient extends Mock implements http.Client {}
 
@@ -31,7 +32,7 @@ void main() {
           completes);
 
       verify(() {
-        return client.post(Uri.parse('$kbaseUrl$kCreateUserEndPoint'),
+        return client.post(Uri.https(kbaseUrl, kCreateUserEndPoint),
             body: jsonEncode({
               'createdAt': 'createdAt',
               'name': 'name',
@@ -55,7 +56,7 @@ void main() {
               message: 'Invalid Email address', statusCode: 400)));
 
       verify(() {
-        return client.post(Uri.parse('$kbaseUrl$kCreateUserEndPoint'),
+        return client.post(Uri.https(kbaseUrl, kCreateUserEndPoint),
             body: jsonEncode({
               'createdAt': 'createdAt',
               'name': 'name',
@@ -63,6 +64,43 @@ void main() {
             }));
       }).called(1);
 
+      verifyNoMoreInteractions(client);
+    });
+  });
+
+  group('getUsers', () {
+    const tUsers = [UserModel.empty()];
+
+    test('should return [List<User>] when the status code is 200', () async {
+      when(() => client.get(any())).thenAnswer(
+          (_) async => http.Response(jsonEncode([tUsers.first.toMap()]), 200));
+
+      final result = await remoteDataSource.getUsers();
+
+      expect(result, equals(tUsers));
+
+      verify(() => client.get(Uri.https(kbaseUrl, kGetUsersEndPoint)))
+          .called(1);
+      verifyNoMoreInteractions(client);
+    });
+
+    test('should throw [APIException] when the status code is not 200',
+        () async {
+      when(() => client.get(any()))
+          .thenAnswer((_) async => http.Response('Server down, Server', 500));
+
+      final methodCall = remoteDataSource.getUsers;
+
+      expect(
+          () => methodCall(),
+          throwsA(const APIException(
+              message: 'Server down, Server', statusCode: 500)));
+
+      verify(
+        () {
+          return client.get(Uri.https(kbaseUrl, kGetUsersEndPoint));
+        },
+      ).called(1);
       verifyNoMoreInteractions(client);
     });
   });
